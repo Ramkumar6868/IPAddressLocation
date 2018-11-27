@@ -14,9 +14,10 @@ with open(file_loacation, 'r') as csv_file:
 	    count = 0
 	    for line in csv_reader:
 	    	print("<========== fetching for IP:" + str(line['source_ip']) + "=============>")
-	    	response = requests.get("https://www.iplocation.net/", data={"query": line['source_ip'], "submit": "IP Lookup"})
+	    	response = requests.post("https://www.iplocation.net/", data={"query": line['source_ip'], "submit": "IP Lookup"},  headers={"authority": "www.iplocation.net", "method": "POST", "path": "/", "scheme": "https", "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8", "accept-encoding": "gzip, deflate, br", "accept-language": "en-GB,en-US;q=0.9,en;q=0.8", "cache-control": "max-age=0", "content-length": "37", "content-type": "application/x-www-form-urlencoded", "cookie": "visid_incap_877543=owjWAzuXTJ22QAIsHv3bhCT6/FsAAAAAQUIPAAAAAADcEHr4z+PTAYFnMkDy5TjD; _ga=GA1.2.664070655.1543305767; _gid=GA1.2.604991871.1543305769; __gads=ID=19818120b6e079c8:T=1543305773:S=ALNI_MY5yWuGqacVn4oBu3_yg_cC0WHrlw; incap_ses_967_877543=eIQZPZt4g2EgNzDK8HlrDdkV/VsAAAAA53T3GdWXAG3vhk8FZRLrPw==; _gat=1", "origin": "https://www.iplocation.net", "referer": "https://www.iplocation.net/", "upgrade-insecure-requests": "1", "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36"})
 	    	txt = html.fromstring(response.content)
 	    	areas = txt.xpath('//td/text()')
+	    	print(areas)
 	    	ip2_location = areas[3] + ', ' + areas[2] + ', ' + areas[1]
 	    	line['IP2Location'] = ip2_location
 	    	ip_info = areas[10] + ', ' + areas[10] + ', ' + areas[9]
